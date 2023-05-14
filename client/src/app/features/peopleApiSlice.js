@@ -27,17 +27,18 @@ export const peopleApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
       }),
     }),
-    getPeopleByEmpType: builder.query({
-      query: ({ empType }) => ({
+    getExistingPersonByEmpType: builder.query({
+      query: (empType) => ({
         url: `/people/${empType}`,
-      }),
-    }),
-  });
+      })
+    })
+  }),
+});
 
-  export const {
-    useGetAllPeopleQuery,
-    useAddNewPersonMutation,
-    useEditExistingPersonMutation,
-    useDeleteExistingPersonMutation,
-    useGetPeopleByEmpTypeQuery
-  } = peopleApiSlice;
+export const {
+  useGetAllPeopleQuery,
+  useAddNewPersonMutation,
+  useEditExistingPersonMutation,
+  useDeleteExistingPersonMutation,
+  useGetExistingPersonByEmpTypeQuery,
+} = peopleApiSlice;

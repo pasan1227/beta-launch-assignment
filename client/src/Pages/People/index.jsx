@@ -3,19 +3,19 @@ import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useDeleteExistingPersonMutation, useGetAllPeopleQuery } from '../../app/features/peopleApiSlice';
+import { useDeleteExistingPersonMutation, useGetAllPeopleQuery, useGetExistingPersonByEmpTypeQuery } from '../../app/features/peopleApiSlice';
 import { clearSelectedPerson, deletePerson, getPeople, getSelectedPerson } from '../../app/features/peopleSlice';
 import { AddPeople, EditPeople, Header } from '../../components';
 
 
-const rows = [
-  { id: 1, displayName: 'Corey Curtis', empId: '0001', designation: 'Senior Developer', empType: 'Full Time', experience: '02 Years' },
-  { id: 2, displayName: 'Corey Curtis', empId: '0002', designation: 'Senior Developer', empType: 'Full Time', experience: '02 Years' },
-  { id: 3, displayName: 'Corey Curtis', empId: '0003', designation: 'Senior Developer', empType: 'Full Time', experience: '02 Years' },
-  { id: 4, displayName: 'Corey Curtis', empId: '0004', designation: 'Senior Developer', empType: 'Full Time', experience: '02 Years' },
-  { id: 5, displayName: 'Corey Curtis', empId: '0005', designation: 'Senior Developer', empType: 'Full Time', experience: '02 Years' },
+// const rows = [
+//   { id: 1, displayName: 'Corey Curtis', empId: '0001', designation: 'Senior Developer', empType: 'Full Time', experience: '02 Years' },
+//   { id: 2, displayName: 'Corey Curtis', empId: '0002', designation: 'Senior Developer', empType: 'Full Time', experience: '02 Years' },
+//   { id: 3, displayName: 'Corey Curtis', empId: '0003', designation: 'Senior Developer', empType: 'Full Time', experience: '02 Years' },
+//   { id: 4, displayName: 'Corey Curtis', empId: '0004', designation: 'Senior Developer', empType: 'Full Time', experience: '02 Years' },
+//   { id: 5, displayName: 'Corey Curtis', empId: '0005', designation: 'Senior Developer', empType: 'Full Time', experience: '02 Years' },
 
-];
+// ];
 
 function People() {
 
@@ -31,6 +31,8 @@ function People() {
     refetchOnReconnect: true,
     refetchOnFocus: true,
   })
+
+  const { data: peopleByEmpType} = useGetExistingPersonByEmpTypeQuery(empType)
 
   const [deleteExistingPerson] = useDeleteExistingPersonMutation()
 
@@ -127,7 +129,6 @@ function People() {
     },
   ];
 
-
   return (
     <>
       <Header title='People' />
@@ -153,7 +154,7 @@ function People() {
       </div>
       <Box sx={{ height: 800, width: '100%', marginTop: 2, padding: 5 }}>
         <DataGrid
-          rows={people?.map((person) => person) || []}
+          rows={peopleByEmpType?.map((person) => person) || []}
           // rows={rows}
           getRowId={(person) => person?._id}
           columns={columns}
