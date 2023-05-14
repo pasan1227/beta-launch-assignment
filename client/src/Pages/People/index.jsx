@@ -32,7 +32,9 @@ function People() {
     refetchOnFocus: true,
   })
 
-  const { data: peopleByEmpType} = useGetExistingPersonByEmpTypeQuery(empType)
+  const { data: peopleByEmpType } = useGetExistingPersonByEmpTypeQuery(empType)
+  console.log(empType);
+
 
   const [deleteExistingPerson] = useDeleteExistingPersonMutation()
 
@@ -47,7 +49,6 @@ function People() {
 
   const handleChange = (event) => {
     setEmpType(event.target.value);
-    console.log(empType);
   }
 
   const handleAddClick = () => {
@@ -154,7 +155,7 @@ function People() {
       </div>
       <Box sx={{ height: 800, width: '100%', marginTop: 2, padding: 5 }}>
         <DataGrid
-          rows={peopleByEmpType?.map((person) => person) || []}
+          rows={people?.map((person) => person) || []}
           // rows={rows}
           getRowId={(person) => person?._id}
           columns={columns}
